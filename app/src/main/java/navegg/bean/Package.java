@@ -253,7 +253,7 @@ public final class Package {
     }
     /**
      * <code>required string nameApp = 3;</code>
-     * @param value The bytes for nameApp to set.
+     * @param value Th bytes for nameApp to set.
      */
     private void setNameAppBytes(
         com.google.protobuf.ByteString value) {
