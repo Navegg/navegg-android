@@ -81,10 +81,6 @@ public class OnBoarding {
         return this.shaPref.getBoolean("toSendOnBoarding"+this.accountId, false);
     }
 
-    public String getInfo(String key) {
-        return (String) this.data.get(key);
-    }
-
     public HashMap<String, String> __get_hash_map(){
         return this.data;
     }

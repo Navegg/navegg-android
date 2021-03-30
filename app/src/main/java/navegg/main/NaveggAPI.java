@@ -33,8 +33,6 @@ public class NaveggAPI extends MultiDexApplication {
         this.webService = new WebService(context);
         this.utils = new Utils(context);
 
-        this.user.setLastActivityName(utils.getActivityName());
-
         if(this.user.getUserId().equals("0")) {
             this.webService.createUserId(this.user);
         }
@@ -68,36 +66,15 @@ public class NaveggAPI extends MultiDexApplication {
         }
     }
 
-
-    public void setTrackPage(String activity){
-        this.user.makeAPageView(activity);
-        this.webService.sendDataTrack(this.user, this.user.getTrackPageViewList());
-    }
-
-    public void setCustom(int id_custom){
-        this.user.setCustom(id_custom);
-        this.webService.sendCustomList(this.user, this.user.getCustomList());
-    }
-
     public String getSegments(String segment) {
         return this.user.getSegments(segment);
     }
-
-    public String getUserId() {
-        return this.user.getUserId();
-    }
-
 
     public void setOnBoarding(String key, String value) {
         if (this.user.setOnBoarding(key, value)) {
             this.webService.sendOnBoarding(this.user, this.user.getOnBoarding());
         }
     }
-
-    public String getOnBoarding(String key) {
-        return this.user.getOnBoarding().getInfo(key);
-    }
-
 
     @Override
     protected void attachBaseContext(Context base) {

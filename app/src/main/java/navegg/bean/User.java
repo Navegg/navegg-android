@@ -1,6 +1,5 @@
 package navegg.bean;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -22,8 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +42,6 @@ public class User {
     private Context context;
     private Utils utils;
     private SharedPreferences shaPref;
-    private List<PageView> trackPageViewList;
     private List<Integer> customList;
     private OnBoarding onBoarding;
     private JSONObject segments;
@@ -106,9 +102,6 @@ public class User {
         String json;
 
         json = this.shaPref.getString("listAppPageView", "");
-        this.trackPageViewList = gsonTrack.fromJson(json, new TypeToken<List<PageView>>(){}.getType());
-        if(this.trackPageViewList==null)
-            this.trackPageViewList = new ArrayList<>();
 
         json = this.shaPref.getString("customList"+this.accountId, "");
         this.customList = gsonTrack.fromJson(json, new TypeToken<List<Integer>>(){}.getType());
@@ -137,10 +130,6 @@ public class User {
         return this.accountId;
     }
 
-    public void setBroadcastRunning(Boolean status){
-        this.shaPref.edit().putBoolean("broadCastRunning", status).commit();
-    }
-
     public Boolean hasToSendDataMobileInfo(){
         return this.shaPref.getBoolean("sentMobileInfo", false);
     }
@@ -155,8 +144,6 @@ public class User {
         return Package.MobileInfo.newBuilder()
                 .setDeviceId(this.getAdvertId())
                 .setPlatform("Android")
-                .setLongitude(this.utils.getLong())
-                .setLatitude(this.utils.getLat())
                 .setAndroidName(Build.DEVICE)
                 .setAndroidBrand(Build.BRAND)
                 .setAndroidModel(Build.MODEL)
@@ -168,89 +155,9 @@ public class User {
                 .setAndroidFingerPrint(Build.FINGERPRINT)
                 .setUserAgent("Android")
                 .setLinkPlayStore(this.utils.getLinkPlayStore())
-                .setTypeCategory(this.utils.getTypeCategory())
-                .setImei(this.utils.getIMEI())
-                .setSoftwareVersion(this.utils.getSoftwareVersion())
                 .setUserId(this.getUserId())
                 .setAcc(this.getAccountId())
                 .build();
-    }
-
-    /* Track/PageView */
-    public List<PageView> getListMobileAndTrack() {
-
-        return this.trackPageViewList;
-    }
-
-    public void makeAPageView(String activity){
-
-        PageView pageView = new PageView();
-        pageView.setActivity(activity);
-        pageView.setDateTime(utils.getCurrentDateTime());
-        pageView.setTitlePage(String.valueOf(((Activity) this.context).getTitle()));
-        pageView.setCallPage("");
-
-        this.trackPageViewList.add(pageView);
-
-        // Sorting
-        Collections.sort(this.trackPageViewList, new Comparator<PageView>() {
-            @Override
-            public int compare(PageView o1, PageView o2) {
-                Long obj1 = o1.getDateTime();
-                Long obj2 = o2.getDateTime();
-                return obj1.compareTo(obj2);
-            }
-        });
-
-        Gson gson = new Gson();
-        String json = gson.toJson(this.trackPageViewList);
-        this.shaPref.edit().putString("listAppPageView", json).commit();
-    }
-
-    public void cleanPageViewList() {
-        this.shaPref.edit().remove("listAppPageView").apply();
-        this.trackPageViewList.clear();
-    }
-
-    public List<PageView> getTrackPageViewList() {
-        return this.trackPageViewList;
-    }
-
-
-    /* Custom */
-
-    public void setCustom(int id_custom) {
-        this.customList.add(id_custom);
-
-        setPermanentCustom(id_custom);
-
-
-        String json  = new Gson().toJson(this.customList);
-        this.shaPref.edit().putString("customList"+this.accountId, json).commit();
-    }
-
-    private void setPermanentCustom(int id_custom) {
-
-        if(!listCustomPermanent.contains(id_custom)) {
-            listCustomPermanent.add(id_custom);
-            String json = new Gson().toJson(this.listCustomPermanent);
-            this.shaPref.edit().putString("customListAux"+this.accountId, json).commit();
-        }
-
-    }
-
-    public List<Integer> getCustomList() {
-        return this.customList;
-    }
-
-    public void removeCustomId(int id_custom){
-        this.customList.remove(Integer.valueOf(id_custom));
-        if(this.customList.size() > 0) {
-            String json  = new Gson().toJson(this.customList);
-            this.shaPref.edit().putString("customList"+this.accountId, json).commit();
-        }else
-            this.shaPref.edit().remove("customList"+this.accountId).commit();
-
     }
 
     /* OnBoarding */
@@ -261,30 +168,6 @@ public class User {
     public boolean setOnBoarding(String key, String value) {
 
         return this.onBoarding.addInfo(key, value);
-    }
-
-
-    /* Activity Name */
-    public String getLastActivityName(){
-        return this.shaPref.getString("lastActivityName","");
-    }
-
-    public void setLastActivityName(String activityName){
-        this.shaPref.edit().putString("lastActivityName",activityName).apply();
-    }
-
-
-    /* Segments */
-    public void saveSegments(String segments) {
-        try {
-            JSONObject json = new JSONObject(segments);
-            this.shaPref.edit().putString("jsonSegments"+this.accountId, json.toString()).apply();
-            this.shaPref.edit().putLong("dateLastSync", Calendar.getInstance().getTime().getTime()).apply();
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-
-
     }
 
     public String  getSegments(String segment){

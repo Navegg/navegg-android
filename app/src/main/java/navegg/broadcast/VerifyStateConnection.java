@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import androidx.multidex.MultiDexApplication;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,9 +18,6 @@ import navegg.main.Utils;
 public class VerifyStateConnection extends BroadcastReceiver {
     private Utils utils;
     private WebService webService;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor editor;
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -47,15 +43,6 @@ public class VerifyStateConnection extends BroadcastReceiver {
                 //First contact with WS
                 if(user.getUserId().equals("0"))
                     webService.createUserId(user);
-
-                //Send Track
-                if (user.getTrackPageViewList() != null)
-                    webService.sendDataTrack(user, user.getTrackPageViewList());
-
-                //Send Custom
-                if (user.getCustomList() != null) {
-                    webService.sendCustomList(user, user.getCustomList());
-                }
 
                 // Send Onboarding
                 if (user.getOnBoarding().hasToSendOnBoarding()) {
