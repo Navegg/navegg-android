@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/com.github.Navegg-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/com.github.Navegg-app.iml" group="navegg-android/app" />
-      <module fileurl="file://$PROJECT_DIR$/libsdk.iml" filepath="$PROJECT_DIR$/libsdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/navegg-android.iml" filepath="$PROJECT_DIR$/.idea/modules/navegg-android.iml" group="navegg-android" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/navegg-android.iml" filepath="$PROJECT_DIR$/.idea/navegg-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/navegg-android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/navegg-android.app.iml" />
     </modules>
   </component>
 </project>

@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
-import navegg.BuildConfig;
 import android.text.TextUtils;
 import android.util.Log;
+
+import androidx.multidex.BuildConfig;
 
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 

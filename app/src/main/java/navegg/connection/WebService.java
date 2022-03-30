@@ -3,6 +3,8 @@ package navegg.connection;
 import android.content.Context;
 import android.util.Base64;
 
+import androidx.multidex.BuildConfig;
+
 import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
@@ -16,7 +18,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import navegg.BuildConfig;
 import navegg.base.ServerAPI;
 import navegg.bean.OnBoarding;
 import navegg.bean.Package;
