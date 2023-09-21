@@ -11,7 +11,8 @@
         android:name="androidx.multidex.MultiDexApplication"
         >
 
-        <receiver android:name=".broadcast.VerifyStateConnection" >
+        <receiver android:name=".broadcast.VerifyStateConnection"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
