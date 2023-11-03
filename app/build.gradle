@@ -60,7 +60,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.android.gms:play-services-ads:22.4.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'androidx.test.ext:junit:1.1.5'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
@@ -76,7 +76,7 @@ dependencies {
   //  myConfig 'com.squareup.okhttp3:logging-interceptor:4.1.0'
    // myConfig 'com.squareup.okhttp3:okhttp:4.1.0'
    // myConfig 'androidx.multidex:multidex:2.0.1'
-    myConfig 'com.google.android.gms:play-services-ads:22.4.0'
+    myConfig 'com.google.android.gms:play-services-ads-identifier:18.0.1'
 }
 
 /* USED TO DEVELOPER */
