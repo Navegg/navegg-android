@@ -6,27 +6,24 @@ buildscript {
             url "https://plugins.gradle.org/m2/"
         }
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-
+        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
-
-apply plugin: "com.github.dcendents.android-maven"
+apply plugin: 'maven-publish'
 
 allprojects {
     repositories {
-        mavenCentral()
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
-task nvgClean(type: Delete) {
+tasks.register('nvgClean', Delete) {
     delete rootProject.buildDir
 }
