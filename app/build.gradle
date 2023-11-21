@@ -6,13 +6,12 @@ plugins {
 
 android {
     compileSdk 33
-    //buildToolsVersion "29.0.3"
     defaultConfig {
         minSdk 21
         targetSdk 33
         multiDexEnabled true
         versionCode 2
-        versionName "1.4.0"
+        versionName project.VERSION_NAME
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
@@ -24,10 +23,11 @@ android {
 
     // https://developer.android.com/reference/tools/gradle-api/7.1/com/android/build/api/dsl/PublishingOptions
     publishing {
-        singleVariant('release') {
-            // withSourcesJar()
-            //  withJavadocJar()
-        }
+        singleVariant('release')
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -63,7 +63,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:18.0.1'
     implementation 'androidx.test.ext:junit:1.1.5'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.5.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
@@ -82,11 +82,11 @@ dependencies {
 /* USED TO DEVELOPER */
 //task install(dependsOn: uploadArchives)
 
-task copyLibs(type: Copy) {
-    // Now you can use 'myConfig' instead of 'implementation' or 'compile'
-    from configurations.myConfig
-    into "$project.rootDir/app/libs/"
-}
+//tasks.register('copyLibs', Copy) {
+//    // Now you can use 'myConfig' instead of 'implementation' or 'compile'
+//    from configurations.myConfig
+//    into "$project.rootDir/app/libs/"
+//}
 
 //task deleteJar(type: Delete) {
 //    delete 'libs/libsdk.jar'
@@ -115,33 +115,36 @@ afterEvaluate {
             // Creates a Maven publication called "release".
             release(MavenPublication) { // debug(MavenPublication) {
                 from components.release
-                groupId = System.getenv('GROUP_ID')
-                artifactId = System.getenv('POM_ARTIFACT_ID')
-                version = System.getenv('VERSION_NAME')
+                groupId = project.property('GROUP_ID')
+                artifactId = project.property('POM_ARTIFACT_ID')
+                version = project.property('VERSION_NAME')
 
                 pom {
-                    name = System.getenv('POM_NAME')
-                    description = System.getenv('POM_DESCRIPTION')
-                    url = System.getenv('POM_URL')
+                    name = project.property('POM_NAME')
+                    description = project.property('POM_DESCRIPTION')
+                    url = project.property('POM_URL')
                     licenses {
                         license {
-                            name = System.getenv('POM_LICENCE_NAME')
-                            url = System.getenv('POM_LICENCE_URL')
+                            name = project.property('POM_LICENCE_NAME')
+                            url = project.property('POM_LICENCE_URL')
                         }
                     }
                     developers {
                         developer {
-                            id = System.getenv('POM_DEVELOPER_ID')
-                            name = System.getenv('POM_DEVELOPER_NAME')
+                            id = project.property('POM_DEVELOPER_ID')
+                            name = project.property('POM_DEVELOPER_NAME')
                         }
                     }
                     scm {
-                        connection = System.getenv('POM_SCM_CONNECTION')
-                        developerConnection = System.getenv('POM_SCM_DEV_CONNECTION')
-                        url = System.getenv('POM_SCM_URL')
+                        connection = project.property('POM_SCM_CONNECTION')
+                        developerConnection = project.property('POM_SCM_DEV_CONNECTION')
+                        url = project.property('POM_SCM_URL')
                     }
                 }
             }
+        }
+        repositories {
+            mavenLocal()
         }
     }
 }

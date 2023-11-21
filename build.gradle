@@ -24,6 +24,6 @@ allprojects {
     }
 }
 
-task nvgClean(type: Delete) {
+tasks.register('nvgClean', Delete) {
     delete rootProject.buildDir
 }
